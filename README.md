@@ -9,4 +9,10 @@ Dependencies:
 - LEDscape (enables a OPC (Open Pixel Control) server to control the LED using the BBB) https://github.com/osresearch/LEDscape
 - Fadecandy, it is a Python OPC client. The file opc.py is included in this repo. https://github.com/scanlime/fadecandy/
 
+TODO:
+- Remove update button
+- Add "Select all" check box
+- Add color squares for each LED, showing the present color.
+
+
 ![Alt text](webinterface.png?raw=true "Web Interface")
