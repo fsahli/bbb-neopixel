@@ -15,3 +15,5 @@ TODO:
 
 
 ![Alt text](Neopixel.png?raw=true "Web Interface")
+
+![Alt text](Neopixel_BBB.jpg?raw=true "Hardware")
