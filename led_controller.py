@@ -2,7 +2,7 @@ import os
 import opc, time
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+     render_template, flash, jsonify
 from neopixel import Neopixel
 
 np = Neopixel()
@@ -30,17 +30,18 @@ def show_entries():
     global red, green, blue
     return render_template('layout.html',red=red,green=green,blue=blue,numLEDs=np.numLEDs )
 
-@app.route('/update/<pixels_to_update>/<rgb>')
-def update(pixels_to_update,rgb):
+@app.route('/update')
+def update():
 	global red, green, blue
-	pixels_to_update = [int(x) for x in pixels_to_update.split(',')]
-	rgb = [int(x) for x in rgb.split(',')]
-	print pixels_to_update
-	red = rgb[0]
-	green = rgb[1]
-	blue = rgb[2]
-	np.update_pixels(pixels_to_update,rgb)
+	red = request.args.get('r', 0, type=int)
+        green = request.args.get('g', 0, type=int)
+        blue = request.args.get('b', 0, type=int)
+        pixels_to_update = request.args.get('leds_to_update', 0, type=str)
 	print red, green, blue	
+	if pixels_to_update is not '':
+		pixels_to_update = [int(x) for x in pixels_to_update.split(',')]
+		print pixels_to_update
+		np.update_pixels(pixels_to_update,[red,green,blue])
 #	green = request.form['g'] 
 #	blue = request.form['b'] 
 #	print red, green, blue

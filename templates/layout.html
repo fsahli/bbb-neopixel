@@ -52,8 +52,16 @@
 	$( "input:checked"  ).each(function( index ) {
 		  ledchecked =ledchecked + (index === 0 ? "": ",") + $( this ).val();
 	  });
-	$("#update").attr("href", "update/"+ledchecked+"/"+red+","+green+","+blue); 
- }
+	      $.getJSON('update', {
+	              leds_to_update: ledchecked,
+		      r: red,
+		      g: green,
+		      b: blue 
+		}, function(data) {
+			$("#result").text(data.result);
+		});
+}
+ 
   $(function() {
     $( "#red, #green, #blue" ).slider({
       orientation: "horizontal",
@@ -74,7 +82,7 @@
  
 <p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding:4px;">
   <span class="ui-icon ui-icon-pencil" style="float:left; margin:-2px 5px 0 0;"></span>
-  Beagle Bone Black Neopixel Controller. Choose the color, select the LEDs to change and press "Update" 
+  Beagle Bone Black Neopixel Controller. Choose a color and select the LEDs to change
 </p>
  
 <div id="red"></div>
@@ -82,8 +90,8 @@
 <div id="blue"></div>
  
 <div id="swatch" class="ui-widget-content ui-corner-all"></div>
-<div> 
-	<br><br><a  href="update/{{ red }}/{{ green }}/{{ blue }}" id="update">Update</a><br><br> 
+<div>
+	<br><br><br>	
 {% for i in range(numLEDs) %}
 <input type="checkbox" name="LED{{ i }}" value="{{ i }}">{{ i }}<br>
 {% endfor %}
